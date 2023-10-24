@@ -1,0 +1,14 @@
+apiVersion: v2
+name: gatewayd
+description: Cloud-native database gateway and framework for building data-driven applications, Like API gateways, for databases.
+type: application
+version: 0.1.0
+appVersion: v0.8.3
+home: https://www.gatewayd.io
+icone: https://github.com/gatewayd-io/docs/blob/main/assets/gatewayd-logotype-light.png
+sources:
+  - https://github.com/gatewayd-io/gatewayd
+  - https://github.com/gatewayd-io/helm-charts
+maintainers:
+  - name: xirehat
+    email: xirehat@gmail.com
