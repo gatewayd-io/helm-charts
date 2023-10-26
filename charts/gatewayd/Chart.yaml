@@ -5,7 +5,7 @@ type: application
 version: 0.1.0
 appVersion: v0.8.3
 home: https://www.gatewayd.io
-icone: https://github.com/gatewayd-io/docs/blob/main/assets/gatewayd-logotype-light.png
+icon: https://github.com/gatewayd-io/docs/blob/main/assets/gatewayd-logotype-light.png
 sources:
   - https://github.com/gatewayd-io/gatewayd
   - https://github.com/gatewayd-io/helm-charts
