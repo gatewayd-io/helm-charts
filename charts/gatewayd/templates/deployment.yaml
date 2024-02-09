@@ -19,7 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "gatewayd.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
+    {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -46,13 +46,17 @@ spec:
                 name: {{ include "gatewayd.fullname" . }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
+          {{- if .Values.gatewaydPluginsConfig.enabled }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+          - name: config-volume
+            mountPath: /etc/gatewayd_plugins.yaml
+            subPath: gatewayd_plugins.yaml
           {{- end }}
-      {{- with .Values.volumes }}
+      {{- if .Values.gatewaydPluginsConfig.enabled }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+      - name: config-volume
+        configMap:
+          name: {{ .Release.Name }}-gatewayd-plugins-config
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
