@@ -30,7 +30,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         # if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch 8-add-configmap"
+        run: ct lint --target-branch 8-add-configmap
 
       - name: Create kind cluster
         # if: steps.list-changed.outputs.changed == 'true'
@@ -38,5 +38,5 @@ jobs:
 
       - name: Run chart-testing (install)
         # if: steps.list-changed.outputs.changed == 'true'
-        run: ct install --target-branch 8-add-configmap"
+        run: ct install --target-branch 8-add-configmap
     
