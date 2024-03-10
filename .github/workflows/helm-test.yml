@@ -32,13 +32,21 @@ jobs:
 
         run: ct lint --target-branch 8-add-configmap
 
-      - name: Create kind cluster
-
+      - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1
 
-      - name: Run chart-testing (install)
+      # install postgresql chart
+      - id: postgresql
+        uses: evryfs/helm-ephemeral-action@master
+        with:
+          repo: https://charts.bitnami.com/bitnami
+          chart: postgresql
+          helm: 'helm' # optional, default value is 'helm'
+          args: '--wait --timeout 2m'
 
-        run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
+      # - name: Run chart-testing (install)
+
+      #   run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
     
 
 
