@@ -38,5 +38,8 @@ jobs:
 
       - name: Run chart-testing (install)
 
-        run: ct install --target-branch 8-add-configmap
+        run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
     
+
+
+        # --set primary.persistence.enabled=false
