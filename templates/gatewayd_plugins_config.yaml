@@ -1,0 +1,9 @@
+{{- if .Values.gatewaydPluginsConfig.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-gatewayd-plugins-config
+data:
+  gatewayd_plugins.yaml: |
+    {{ .Values.gatewaydPluginsConfig.content | nindent 4 }}
+{{- end }}
