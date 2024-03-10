@@ -41,13 +41,8 @@ jobs:
         with:
           repo: https://charts.bitnami.com/bitnami
           chart: postgresql
-          helm: 'helm' # optional, default value is 'helm'
+          helm: 'helm' 
           args: '--wait --timeout 2m'
 
-      # - name: Run chart-testing (install)
-
-      #   run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
-    
-
-
-        # --set primary.persistence.enabled=false
+      - name: Run chart-testing (install)
+        run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
