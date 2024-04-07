@@ -49,4 +49,14 @@ jobs:
         run: |
           kubectl rollout status --watch deployment/gatewayd --timeout=5m
       - name: Wait for gatewayd to start
-        run: status=$(kubectl get pod | grep gatewayd | awk '{print $2}' | grep 0); if [ -z "$status" ]; then echo "It's not okay"; exit 1; else echo "It's okay"; fi
+        run: |
+          for ((i=0; i<4; i++)); do
+            status=$(kubectl get pod | grep gatewayd | awk '{print $2}' | grep 0)
+            if [ -z "$status" ]; then
+                echo "It's not okay"
+                exit 1
+            else
+                echo "It's okay"
+            fi
+            sleep 60
+          done
