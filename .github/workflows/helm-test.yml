@@ -15,34 +15,42 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  example:
+    name: Minikube installation - Basic test
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.0
-
-      - name: Run chart-testing (lint)
-
-        run: ct lint --target-branch 8-add-configmap
-
-      - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1
-
-      # install postgresql chart
-      - id: postgresql
-        uses: evryfs/helm-ephemeral-action@master
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
-          repo: https://charts.bitnami.com/bitnami
-          chart: postgresql
-          helm: 'helm' 
-          args: '--wait --timeout 2m'
+          minikube version: 'v1.32.0'
+          kubernetes version: 'v1.28.3'
+          github token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run chart-testing (install)
-        run: ct install --charts oci://registry-1.docker.io/bitnamicharts/postgresql
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install PostgreSQL
+        run: helm install psql oci://registry-1.docker.io/bitnamicharts/postgresql --set global.postgresql.auth.postgresPassword=postgres
+      - name: Check deployment status
+        run: |
+          kubectl rollout status --watch statefulset/psql-postgresql --timeout=5m
+      - name: Wait for PostgreSQL database to start
+        run: |
+          for n in [ 0 1 2 3 4 5 6 7 8 9 ]
+          do
+            if kubectl logs pod/psql-postgresql-0 | grep 'database system is ready to accept connections'
+            then
+              exit 0
+            fi
+            sleep 30
+          done
+          echo PostgreSQL did not start within 300 seconds!
+          exit 1
+      - name: Install gatewayd
+        run: helm install gatewayd . 
+      - name: Check deployment status
+        run: |
+          kubectl rollout status --watch deployment/gatewayd --timeout=5m
+      - name: Wait for gatewayd to start
+        run: status=$(kubectl get pod | grep gatewayd | awk '{print $2}' | grep 0); if [ -z "$status" ]; then echo "It's not okay"; exit 1; else echo "It's okay"; fi
