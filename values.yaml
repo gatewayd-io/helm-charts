@@ -1,7 +1,7 @@
 gatewayd:
   clients:
     default:
-      address: "psq09l-postgresql:5432"
+      address: "psql-postgresql:5432"
   loggers:
     default:
       # For production, use info
