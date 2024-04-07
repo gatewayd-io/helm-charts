@@ -51,15 +51,17 @@ jobs:
       - name: Wait for gatewayd to start
         run: |
           for ((i=0; i<5; i++)); do
-              status=$(kubectl get pod | grep gatewayd | awk '{print $2}' | grep 0)
-              sleep 60
-              if [ -z "$status" ]; then
-                  echo "It's not okay"
+              deployment_status=$(kubectl get deployment gatewayd | awk '{print $2}' | grep 0)
+          
+              if [ -z "$deployment_status" ]; then
+                  echo "Deployment is ready"
+                  break
+              else
+                  echo "Deployment is not ready"
                   if [ $i -eq 4 ]; then
                       exit 1
                   fi
-              else
-                  echo "It's okay"
-                  break
               fi
+              sleep 60
           done
+          
