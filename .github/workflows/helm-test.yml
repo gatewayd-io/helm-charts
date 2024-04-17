@@ -11,17 +11,15 @@ on:
       - main
 
 jobs:
-  example:
-    name: Basic test by Minikube
+  test:
+    name: Basic chart test using Minikube
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Start minikube
         uses: medyagh/setup-minikube@master
-      - name: Try the cluster !
+      - name: Test whether the cluster is running
         run: kubectl get pods -A
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Install PostgreSQL
         run: helm install psql oci://registry-1.docker.io/bitnamicharts/postgresql --set global.postgresql.auth.postgresPassword=postgres
       - name: Check deployment status

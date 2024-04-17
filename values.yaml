@@ -92,9 +92,6 @@ gatewaydPluginsConfig:
   enabled: false
   content: |
       verificationPolicy: "passdown"
-      compatibilityPolicy: "strict"
-      acceptancePolicy: "accept"
-      terminationPolicy: "stop"
       enableMetricsMerger: True
       metricsMergerPeriod: 5s
       healthCheckPeriod: 5s
@@ -109,10 +106,6 @@ gatewaydPluginsConfig:
           args: ["--log-level", "debug"]
           env:
             - MAGIC_COOKIE_KEY=GATEWAYD_PLUGIN
-            - MAGIC_COOKIE_VALUE=5712b87aa5d7e9f9e9ab643e6603181c5b796015cb1c09d6f5ada882bf2a1872
-            - REDIS_URL=redis://localhost:6379/0
-            - EXPIRY=1h
-
             - METRICS_ENABLED=True
             - METRICS_UNIX_DOMAIN_SOCKET=/tmp/gatewayd-plugin-cache.sock
             - METRICS_PATH=/metrics

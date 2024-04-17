@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the GatewayD Helm chart
 
 ## Usage
 
-Modify the values.yaml file to customize the deployment according to your requirements. You can override any default values as needed.
+Modify the [values.yaml](values.yaml) file to customize the deployment according to your requirements. You can override any default values as needed.
 
 ## Contributing
 
