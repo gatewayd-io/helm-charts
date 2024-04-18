@@ -1,8 +1,4 @@
-# GatewayD Community Kubernetes Helm Charts
-
-The Helm charts in this repository can be used for deploying GatewayD on Kubernetes. For instructions on how to use these charts, see the [README.md](charts/gatewayd/README.md).
-
-# GatewayD Community Kubernetes Helm Charts
+# Kubernetes Helm Charts for GatewayD
 
 This Helm charts installs GatewayD on your Kubernetes cluster.
 
@@ -16,12 +12,13 @@ This Helm charts installs GatewayD on your Kubernetes cluster.
 git clone https://github.com/gatewayd-io/helm-charts.git
 cd helm-charts/charts/gatewayd/
 helm install gatewayd-release -f values.yaml ./
+# Optionally, if you want to remove GatewayD from your cluster
 # helm uninstall gatewayd-release
 ```
 
-## Configuration for GatewayD Helm Chart
+## Configurations
 
-#### Deployment Configuration
+### Deployment Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
@@ -42,14 +39,14 @@ helm install gatewayd-release -f values.yaml ./
 | `affinity`                                  | Affinity for the pod                                                                                  | `{}`                        |
 | `tolerations`                               | Tolerations for the pod                                                                               | `[]`                        |
 
-#### Service Configuration
+### Service Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
 | `service.port`                              | The port that the service listens on                                                                  | `15432`                     |
 | `ingress.enabled`                           | Determines whether an Ingress resource should be created                                               | `false`                     |
 
-#### Ingress Configuration
+### Ingress Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
@@ -59,7 +56,7 @@ helm install gatewayd-release -f values.yaml ./
 | `ingress.annotations`                       | Annotations to add to the Ingress resource. If `ingress.className` is set and the Kubernetes version is less than 1.18, the `kubernetes.io/ingress.class` annotation is added with the value of `ingress.className`. | `{}`                        |
 | `Capabilities.KubeVersion.GitVersion`       | The Kubernetes version running in the cluster. This is used to determine the API version of the Ingress resource to create.                                       |                             |
 
-#### Autoscaling Configuration
+### Autoscaling Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
@@ -69,7 +66,7 @@ helm install gatewayd-release -f values.yaml ./
 | `autoscaling.targetCPUUtilizationPercentage`| The target percentage of CPU utilization across all replicas that the Horizontal Pod Autoscaler should maintain. If set, a CPU utilization metric is added to the Horizontal Pod Autoscaler. |                             |
 | `autoscaling.targetMemoryUtilizationPercentage`| The target percentage of memory utilization across all replicas that the Horizontal Pod Autoscaler should maintain. If set, a memory utilization metric is added to the Horizontal Pod Autoscaler. |                             |
 
-#### Service Account Configuration
+### Service Account Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
@@ -79,7 +76,7 @@ helm install gatewayd-release -f values.yaml ./
 | `serviceAccount.annotations`                | Annotations to add to the ServiceAccount.                                                              |                             |
 | `serviceAccount.automount`                  | Determines whether the ServiceAccount token should be automatically mounted to the pods. This is set as the `automountServiceAccountToken` field in the ServiceAccount resource. |                             |
 
-#### ConfigMap Configuration
+### ConfigMap Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
@@ -87,10 +84,9 @@ helm install gatewayd-release -f values.yaml ./
 | `.Release.Name`                             | The release name, used as part of the ConfigMap name.                                                  |                             |
 | `gatewaydPluginsConfig.content`             | The content of the `gatewayd_plugins.yaml` file. This is set as the `gatewayd_plugins.yaml` data in the ConfigMap.                                                  |                             |
 
-
 ## Usage
 
-Modify the [values.yaml](values.yaml) file to customize the deployment according to your requirements. You can override any default values as needed.
+Modify the [values.yaml](values.yaml) file to customize the deployment according to your requirements. You can override any default values as needed. Please refer to GatewayD [documentation](https://docs.gatewayd.io/getting-started/welcome) for more information.
 
 ## Contributing
 
