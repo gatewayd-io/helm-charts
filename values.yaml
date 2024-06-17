@@ -88,6 +88,12 @@ tolerations: []
 
 affinity: {}
 
+# Define a Pod Disruption Budget
+# ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+podDisruptionBudget:
+  # minAvailable: 1
+  # maxUnavailable: 1
+
 gatewaydPluginsConfig:
   enabled: false
   content: |

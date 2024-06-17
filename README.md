@@ -76,6 +76,13 @@ helm install gatewayd-release -f values.yaml ./
 | `serviceAccount.annotations`                | Annotations to add to the ServiceAccount.                                                              |                             |
 | `serviceAccount.automount`                  | Determines whether the ServiceAccount token should be automatically mounted to the pods. This is set as the `automountServiceAccountToken` field in the ServiceAccount resource. |                             |
 
+### Pod Disruption Budgets Configuration
+
+| Parameter                                   | Description                                                                                           | Default Value               |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
+| `podDisruptionBudget.minAvailable`                   | Specifies the minimum number of pods from the set that must still be available after the eviction, even in the absence of the evicted pod.                      |        `1`                   |
+| `podDisruptionBudget.maxUnavailable`                   | Specifies the maximum number of pods from the set that can be unavailable after the eviction. It can be either an absolute number or a percentage.                    |                             |
+
 ### ConfigMap Configuration
 
 | Parameter                                   | Description                                                                                           | Default Value               |
