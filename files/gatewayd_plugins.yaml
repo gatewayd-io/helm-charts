@@ -1,0 +1,30 @@
+compatibilityPolicy: "strict"
+enableMetricsMerger: True
+metricsMergerPeriod: 5s
+healthCheckPeriod: 5s
+reloadOnCrash: True
+timeout: 30s
+
+plugins:
+  - name: gatewayd-plugin-cache
+    enabled: True
+    url: github.com/gatewayd-io/gatewayd-plugin-cache@latest
+    localPath: /usr/bin/gatewayd-plugin-cache
+    args: ["--log-level", "info"]
+    env:
+      - MAGIC_COOKIE_KEY=GATEWAYD_PLUGIN
+      - MAGIC_COOKIE_VALUE=5712b87aa5d7e9f9e9ab643e6603181c5b796015cb1c09d6f5ada882bf2a1872
+      - REDIS_URL=redis://redis-master.default.svc.cluster.local:6379/0
+      - EXPIRY=1h
+      - DEFAULT_DB_NAME=postgres
+      - METRICS_ENABLED=True
+      - METRICS_UNIX_DOMAIN_SOCKET=/tmp/gatewayd-plugin-cache.sock
+      - METRICS_PATH=/metrics
+      - PERIODIC_INVALIDATOR_ENABLED=True
+      - PERIODIC_INVALIDATOR_INTERVAL=1m
+      - PERIODIC_INVALIDATOR_START_DELAY=1m
+      - API_ADDRESS=localhost:18080
+      - EXIT_ON_STARTUP_ERROR=False
+      - SENTRY_DSN=https://70eb1abcd32e41acbdfc17bc3407a543@o4504550475038720.ingest.sentry.io/4505342961123328
+      - CACHE_CHANNEL_BUFFER_SIZE=100
+    checksum: b153242dfb81dcd63b4444118252be5917b8a1b0f0f775c474946224d2a297eb

@@ -1,0 +1,72 @@
+# GatewayD Global Configuration
+loggers:
+  default:
+    output: ["console"] # "stdout", "stderr", "syslog", "rsyslog" and "file"
+    level: "debug" # panic, fatal, error, warn, info (default), debug, trace
+    noColor: False
+    timeFormat: "unix" # unixms, unixmicro and unixnano
+    consoleTimeFormat: "RFC3339" # Go time format string
+    # If the output contains "file", the following fields are used:
+    fileName: "gatewayd.log"
+    maxSize: 500 # MB
+    # If maxBackups and maxAge are both 0, no old log files will be deleted.
+    maxBackups: 5
+    maxAge: 30 # days
+    compress: True
+    localTime: False
+    # Rsyslog config
+    rsyslogNetwork: "tcp"
+    rsyslogAddress: "localhost:514"
+    syslogPriority: "info" # emerg, alert, crit, err, warning, notice, debug
+
+metrics:
+  default:
+    enabled: True
+    address: 0.0.0.0:9090
+    path: /metrics
+    readHeaderTimeout: 10s # duration, prevents Slowloris attacks
+    timeout: 10s # duration
+    certFile: "" # Certificate file in PEM format
+    keyFile: "" # Private key file in PEM format
+
+clients:
+  default:
+    network: tcp
+    address: psql-postgresql.default.svc.cluster.local:5432
+    tcpKeepAlive: False
+    tcpKeepAlivePeriod: 30s # duration
+    receiveChunkSize: 8192
+    receiveDeadline: 0s # duration, 0ms/0s means no deadline
+    receiveTimeout: 0s # duration, 0ms/0s means no timeout
+    sendDeadline: 0s # duration, 0ms/0s means no deadline
+    dialTimeout: 60s # duration
+    # Retry configuration
+    retries: 3 # 0 means no retry and fail immediately on the first attempt
+    backoff: 1s # duration
+    backoffMultiplier: 2.0 # 0 means no backoff
+    disableBackoffCaps: false
+
+pools:
+  default:
+    size: 10
+
+proxies:
+  default:
+    healthCheckPeriod: 60s # duration
+
+servers:
+  default:
+    network: tcp
+    address: 0.0.0.0:15432
+    enableTicker: False
+    tickInterval: 5s # duration
+    enableTLS: False
+    certFile: ""
+    keyFile: ""
+    handshakeTimeout: 5s # duration
+
+api:
+  enabled: True
+  httpAddress: 0.0.0.0:18080
+  grpcNetwork: tcp
+  grpcAddress: 0.0.0.0:19090

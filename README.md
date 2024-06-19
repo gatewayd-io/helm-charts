@@ -35,6 +35,7 @@ helm install gatewayd-release -f values.yaml ./
 | `image.pullPolicy`                          | The image pull policy                                                                                 | `IfNotPresent`              |
 | `resources`                                 | Resource requests and limits for the container                                                        | `{}`                        |
 | `gatewaydPluginsConfig.enabled`             | Determines whether the `gatewayd_plugins.yaml` ConfigMap is mounted to the container. If enabled, a volume and volumeMount are added to the deployment. | `false`                     |
+| `gatewaydConfig.enabled`             | Determines whether the `gatewayd.yaml` ConfigMap is mounted to the container. If enabled, a volume and volumeMount are added to the deployment. | `false`                     |
 | `nodeSelector`                              | Node selector for the pod                                                                             | `{}`                        |
 | `affinity`                                  | Affinity for the pod                                                                                  | `{}`                        |
 | `tolerations`                               | Tolerations for the pod                                                                               | `[]`                        |
@@ -89,7 +90,8 @@ helm install gatewayd-release -f values.yaml ./
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------|
 | `gatewayd.fullname`                         | The full name of the deployment, used as the name of the ConfigMap.                                    |                             |
 | `.Release.Name`                             | The release name, used as part of the ConfigMap name.                                                  |                             |
-| `gatewaydPluginsConfig.content`             | The content of the `gatewayd_plugins.yaml` file. This is set as the `gatewayd_plugins.yaml` data in the ConfigMap.                                                  |                             |
+| `files/gatewayd_plugins.yaml`             | The content of the `gatewayd_plugins.yaml` file. This is set as the `gatewayd_plugins.yaml` data in the ConfigMap.                                                  |                             |
+| `files/gatewayd.yaml`             | The content of the `gatewayd.yaml` file. This is set as the `gatewayd.yaml` data in the ConfigMap.                                                  |                             |
 
 ## Usage
 

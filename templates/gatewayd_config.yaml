@@ -1,0 +1,9 @@
+{{- if .Values.gatewaydConfig.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  gatewayd.yaml: |-
+{{ .Files.Get "files/gatewayd.yaml" | indent 4 }}
+{{- end }}
