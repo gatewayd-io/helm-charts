@@ -36,27 +36,52 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["gatewayd", "run"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cd /usr/bin
+              gatewayd plugin install --skip-path-slip-verification --output-dir /usr/bin --plugin-config /etc/gatewayd_plugins.yaml --cleanup=true --overwrite-config=false --update
+              gatewayd run --config /etc/gatewayd.yaml --plugin-config  /etc/gatewayd_plugins.yaml
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: {{ include "gatewayd.fullname" . }} 
+                name: {{ include "gatewayd.fullname" . }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 18080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.gatewaydPluginsConfig.enabled }}
+          {{- if or (.Values.gatewaydPluginsConfig.enabled) (.Values.gatewaydConfig.enabled) }}
           volumeMounts:
-          - name: config-volume
+          {{- if .Values.gatewaydPluginsConfig.enabled }}
+          - name: plugin-config-volume
             mountPath: /etc/gatewayd_plugins.yaml
             subPath: gatewayd_plugins.yaml
           {{- end }}
-      {{- if .Values.gatewaydPluginsConfig.enabled }}
+          {{- if .Values.gatewaydConfig.enabled }}
+          - name: gatewayd-config-volume
+            mountPath: /etc/gatewayd.yaml
+            subPath: gatewayd.yaml
+          {{- end }}
+          {{- end }}
+      {{- if or (.Values.gatewaydPluginsConfig.enabled) (.Values.gatewaydConfig.enabled) }}
       volumes:
-      - name: config-volume
+      {{- if .Values.gatewaydPluginsConfig.enabled }}
+      - name: plugin-config-volume
         configMap:
-          name: {{ .Release.Name }}-gatewayd-plugins-config
+          name: {{ .Release.Name }}-plugins-config
+      {{- end }}
+      {{- if .Values.gatewaydConfig.enabled }}
+      - name: gatewayd-config-volume
+        configMap:
+          name: {{ .Release.Name }}-config
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
