@@ -1,7 +1,8 @@
 gatewayd:
   clients:
     default:
-      address: "psql-postgresql:5432"
+      writes:
+        address: "psql-postgresql:5432"
   loggers:
     default:
       # For production, use info
@@ -96,7 +97,7 @@ podDisruptionBudget:
   # maxUnavailable: 1
 
 gatewaydPluginsConfig:
-  enabled: false
+  enabled: true
 
 gatewaydConfig: 
-  enabled: false
+  enabled: true
