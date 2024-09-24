@@ -31,28 +31,31 @@ metrics:
 
 clients:
   default:
-    network: tcp
-    address: psql-postgresql.default.svc.cluster.local:5432
-    tcpKeepAlive: False
-    tcpKeepAlivePeriod: 30s # duration
-    receiveChunkSize: 8192
-    receiveDeadline: 0s # duration, 0ms/0s means no deadline
-    receiveTimeout: 0s # duration, 0ms/0s means no timeout
-    sendDeadline: 0s # duration, 0ms/0s means no deadline
-    dialTimeout: 60s # duration
-    # Retry configuration
-    retries: 3 # 0 means no retry and fail immediately on the first attempt
-    backoff: 1s # duration
-    backoffMultiplier: 2.0 # 0 means no backoff
-    disableBackoffCaps: false
+    writes:
+      network: tcp
+      address: psql-postgresql.default.svc.cluster.local:5432
+      tcpKeepAlive: False
+      tcpKeepAlivePeriod: 30s # duration
+      receiveChunkSize: 8192
+      receiveDeadline: 0s # duration, 0ms/0s means no deadline
+      receiveTimeout: 0s # duration, 0ms/0s means no timeout
+      sendDeadline: 0s # duration, 0ms/0s means no deadline
+      dialTimeout: 60s # duration
+      # Retry configuration
+      retries: 3 # 0 means no retry and fail immediately on the first attempt
+      backoff: 1s # duration
+      backoffMultiplier: 2.0 # 0 means no backoff
+      disableBackoffCaps: false
 
 pools:
   default:
-    size: 10
+    writes:
+      size: 10
 
 proxies:
   default:
-    healthCheckPeriod: 60s # duration
+    writes:
+      healthCheckPeriod: 60s # duration
 
 servers:
   default:
@@ -64,6 +67,18 @@ servers:
     certFile: ""
     keyFile: ""
     handshakeTimeout: 5s # duration
+    loadBalancer:
+      strategy: ROUND_ROBIN # ROUND_ROBIN, RANDOM, WEIGHTED_ROUND_ROBIN
+      consistentHash:
+        useSourceIp: false
+      # Optional configuration for strategies that support rules (e.g., WEIGHTED_ROUND_ROBIN)
+      # loadBalancingRules:
+      #   - condition: "DEFAULT" # Currently, only the "DEFAULT" condition is supported
+      #     distribution:
+      #       - proxyName: "writes"
+      #         weight: 70
+      #       - proxyName: "reads"
+      #         weight: 30
 
 api:
   enabled: True
