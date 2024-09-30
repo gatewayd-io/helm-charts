@@ -3,7 +3,7 @@ name: gatewayd
 description: Cloud-native database gateway and framework for building data-driven applications, Like API gateways, for databases.
 type: application
 version: 0.1.0
-appVersion: v0.9.7
+appVersion: v0.9.8
 home: https://www.gatewayd.io
 icon: https://github.com/gatewayd-io/docs/blob/main/assets/gatewayd-logotype-light.png
 sources:
