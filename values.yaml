@@ -1,12 +1,3 @@
-gatewayd:
-  clients:
-    default:
-      writes:
-        address: "psql-postgresql:5432"
-  loggers:
-    default:
-      # For production, use info
-      level: debug
 replicaCount: 1
 
 image:
@@ -96,8 +87,18 @@ podDisruptionBudget:
   minAvailable: 1
   # maxUnavailable: 1
 
+# If gatewaydPluginsConfig is disabled, GatewayD will use the default plugin configuration.
+# The default config can be found here: https://github.com/gatewayd-io/gatewayd/blob/main/gatewayd_plugins.yaml
 gatewaydPluginsConfig:
   enabled: true
 
+# If gatewaydConfig is disabled, GatewayD will use the default configuration.
+# The default config can be found here: https://github.com/gatewayd-io/gatewayd/blob/main/gatewayd.yaml
 gatewaydConfig: 
   enabled: true
+
+# Configuration can be overridden using environment variables. 
+# For more details, visit: https://docs.gatewayd.io/using-gatewayd/configuration/#environment-variables
+# extraEnvVars:
+#   GATEWAYD_CLIENTS_DEFAULT_WRITES_ADDRESS: psql-postgresql:5432
+#   GATEWAYD_LOGGERS_DEFAULT_LEVEL: debug # For production, use info

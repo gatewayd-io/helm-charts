@@ -46,9 +46,13 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "gatewayd.fullname" . }}
+          {{- if .Values.extraEnvVars}}
+          env:
+            {{- range $key, $value := .Values.extraEnvVars }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+            {{- end }}
+          {{- end}}
           readinessProbe:
             httpGet:
               path: /healthz

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "gatewayd.fullname" . }}
-  labels:
-    app: gatewayd
-data:
-  GATEWAYD_CLIENTS_DEFAULT_WRITES_ADDRESS: {{ .Values.gatewayd.clients.default.writes.address }}
-  GATEWAYD_LOGGERS_DEFAULT_LEVEL: {{ .Values.gatewayd.loggers.default.level }}
