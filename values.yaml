@@ -24,10 +24,12 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -42,7 +44,8 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -55,17 +58,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -94,10 +93,9 @@ gatewaydPluginsConfig:
 
 # If gatewaydConfig is disabled, GatewayD will use the default configuration.
 # The default config can be found here: https://github.com/gatewayd-io/gatewayd/blob/main/gatewayd.yaml
-gatewaydConfig: 
+gatewaydConfig:
   enabled: true
-
-# Configuration can be overridden using environment variables. 
+# Configuration can be overridden using environment variables.
 # For more details, visit: https://docs.gatewayd.io/using-gatewayd/configuration/#environment-variables
 # extraEnvVars:
 #   GATEWAYD_CLIENTS_DEFAULT_WRITES_ADDRESS: psql-postgresql:5432
