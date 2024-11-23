@@ -12,4 +12,20 @@ spec:
       image: busybox
       command: ['wget']
       args: ['{{ include "gatewayd.fullname" . }}:{{ .Values.service.port }}']
+      resources:
+        limits:
+          cpu: "200m"
+          memory: "128Mi"
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
   restartPolicy: Never

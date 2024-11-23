@@ -33,7 +33,7 @@ helm install gatewayd-release -f values.yaml ./
 | `image.repository`                          | The Docker image repository                                                                           | `gatewaydio/gatewayd`       |
 | `image.tag`                                 | The Docker image tag. If not set, the app version from the chart is used                              | `""`                        |
 | `image.pullPolicy`                          | The image pull policy                                                                                 | `IfNotPresent`              |
-| `resources`                                 | Resource requests and limits for the container                                                        | `{}`                        |
+| `resources`                                 | Resource requests and limits for the container                                                        | `{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` |
 | `gatewaydPluginsConfig.enabled`             | Determines whether the `gatewayd_plugins.yaml` ConfigMap is mounted to the container. If enabled, a volume and volumeMount are added to the deployment. | `false`                     |
 | `gatewaydConfig.enabled`             | Determines whether the `gatewayd.yaml` ConfigMap is mounted to the container. If enabled, a volume and volumeMount are added to the deployment. | `false`                     |
 | `nodeSelector`                              | Node selector for the pod                                                                             | `{}`                        |

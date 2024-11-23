@@ -1,5 +1,4 @@
-
-name: Test Action 
+name: Test Action
 on:
   push:
     branches:
@@ -38,7 +37,7 @@ jobs:
           echo PostgreSQL did not start within 300 seconds!
           exit 1
       - name: Install gatewayd
-        run: helm install gatewayd . 
+        run: helm install gatewayd .
       - name: Check deployment status
         run: |
           kubectl rollout status --watch deployment/gatewayd --timeout=5m
